@@ -1,10 +1,17 @@
 #!/usr/bin/env python
+# @Time    : 2017/3/15
+# @Author  : AlPha
+# @File    : 魔力盒视频下载GUI界面.py
+# @Version : 3.5
+# @Software: PyCharm Community Edition
+# @Blog    : http://alpha87.github.io
 from tkinter.scrolledtext import ScrolledText
 from urllib.request import urlopen
 from lxml import etree
 from tkinter import ttk
 from tkinter import *
 import threading
+import time
 import random
 import os
 
@@ -43,9 +50,14 @@ def downloadVideo():
                     "分享人数：" + str(share) + "\n" +
                     "链接：" + str(url) + "\n\n")
         button.state(['disabled'])
-        path = os.getcwd() + "/videos/"
-        if not os.path.isdir(path):
-            os.mkdir(path)
+        if label == "##" or label == '未分类':
+            path = os.getcwd() + "/videos/未分类/"
+        else:
+            path = os.getcwd() + "/videos/" + label[1:3] + "/"
+        time.sleep(0.5)
+        if not os.path.exists(path):
+            os.makedirs(path) # 创建多层目录
+
         with open(path + str(title)+".mp4",'wb') as video:
             var1.set("正在下载，请稍后...  下载速度取决于网速")
             try:
